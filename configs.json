@@ -1,0 +1,29 @@
+{
+    "aircraft_name": "Gulfstream G550",
+    "weight_params": {
+        "W_payload_kg": 2812.0,
+        "R_km": 7200.0,
+        "V_mps": 250.56,
+        "h_m": 12497,
+        "initial_W0_guess_kg": 40000.0
+    },
+    "runway_params": {
+        "S_m2": 113.7,
+        "T_N_static": 136880,
+        "CLmax_TO": 2.1,
+        "CD0_takeoff": 0.048,
+        "K": 0.049,
+        "CLmax_land": 2.6,
+        "CD0_landing": 0.063
+    },
+    "payload_range_params": {
+        "W_payload_max_kg": 2812.0,
+        "W_fuel_max_kg": 18733.0,
+        "rho_kgm3": 0.301,
+        "S_m2": 113.7,
+        "V_mps": 250.56,
+        "C_D0": 0.018,
+        "k_2": 0.049,
+        "TSFC_kgNs": 2.0028e-5
+    }
+}
