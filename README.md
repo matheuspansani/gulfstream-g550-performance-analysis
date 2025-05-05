@@ -12,7 +12,7 @@ Ferramentas Python para análise de desempenho do Gulfstream G550, incluindo cá
 ## Instalação
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/gulfstream-g550-performance-analysis.git
+git clone https://github.com/matheuspansani/gulfstream-g550-performance-analysis.git
 cd gulfstream-g550-performance-analysis
 
 # Instale as dependências
