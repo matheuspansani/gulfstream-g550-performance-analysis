@@ -27,15 +27,15 @@ def calculate_empty_weight_fraction(W0_N: float) -> float:
         Fração de peso vazio (We/W0)
     """
     # Coeficientes de Raymer para jatos executivos
-    A = 1.118
-    C = -0.070
+    A = 2.388
+    C = -0.126
     
     return A * W0_N**(C)
 
 
 def calculate_total_fuel_fraction(W0_kg: float, R_km: float, V_mps: float, 
-                                 h_m: float, L_D_cruise: float = 16.0, 
-                                 TSFC_kgNs: float = 2.0e-5) -> float:
+                                 h_m: float, L_D_cruise: float = 21.96, 
+                                 TSFC_kgNs: float = 2.0e-4) -> float:
     """
     Calcula a fração de combustível baseada na missão completa da aeronave.
     
@@ -55,11 +55,19 @@ def calculate_total_fuel_fraction(W0_kg: float, R_km: float, V_mps: float,
     
     # Cálculo da fração para fase de cruzeiro utilizando a equação de Breguet
     W3_W2 = math.exp(-(R_m * g * TSFC_kgNs) / (V_mps * L_D_cruise))
+
+    logger.info("Fração de peso após cruzeiro (W3/W2): %.5f", W3_W2)
+    logger.info("Parâmetros de cruzeiro:")
+    logger.info("  Alcance (R):         %.2f km", R_km)
+    logger.info("  Velocidade (V):      %.2f m/s (%.2f km/h)", V_mps, V_mps*3.6)
+    logger.info("  Altitude (h):        %.2f m (~FL%.0f)", h_m, h_m/30.48)
+    logger.info("  Razão L/D:           %.2f", L_D_cruise)
+    logger.info("  TSFC:                %.2e kg/(N·s)", TSFC_kgNs)
     
     # Fatores para outras fases da missão
     W_taxi = 0.97       # Redução de peso devido ao taxi
-    W_takeoff = 0.985   # Redução de peso devido à decolagem
-    W_climb = 0.985     # Redução de peso devido à subida
+    W_takeoff = 0.93   # Redução de peso devido à decolagem
+    W_climb = 0.99     # Redução de peso devido à subida
     W_descent = 0.995   # Redução de peso devido à descida e pouso
     
     # Fator combinado para fases que não são cruzeiro
@@ -168,11 +176,11 @@ def estimate_weights_iterative(W_payload_kg: float, R_km: float, V_mps: float,
 def run_example() -> None:
     """Executa um exemplo de uso do estimador de pesos."""
     # Parâmetros para um jato executivo similar ao Gulfstream G550
-    W_payload_kg = 2812.0      # Carga paga típica
-    R_km = 7200.0              # Alcance de projeto
-    V_mps = 250.56             # ~902 km/h em velocidade de cruzeiro
-    h_m = 12497                # ~FL410 (para densidade 0.301 kg/m³)
-    initial_W0_guess_kg = 40000.0  # Estimativa inicial do MTOW
+    W_payload_kg = 7000      # Carga paga típica
+    R_km = 3134              # Alcance de projeto
+    V_mps = 250             # ~902 km/h em velocidade de cruzeiro
+    h_m = 16733                # ~FL410 (para densidade 0.301 kg/m³)
+    initial_W0_guess_kg = 25742  # Estimativa inicial do MTOW
     
     logger.info("=== EXEMPLO: ESTIMATIVA DE PESOS PARA JATO EXECUTIVO ===")
     logger.info("Parâmetros de entrada:")
